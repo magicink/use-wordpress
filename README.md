@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/magicink/use-wordpress.svg?branch=develop)](https://travis-ci.org/magicink/use-wordpress)
+
 # Overview
 
 Useful React Hooks for WordPress.
