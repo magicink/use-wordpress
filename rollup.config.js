@@ -5,7 +5,7 @@ import resolve from 'rollup-plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
 
 export default [{
-  external: ['react', 'styled-components'],
+  external: ['react'],
   input: `${path.resolve(__dirname, 'src', 'index.js')}`,
   output: {
     exports: 'named',
@@ -16,10 +16,6 @@ export default [{
     babel({
       babelrc: false,
       exclude: 'node_modules/**',
-      presets: [
-        '@babel/preset-flow',
-        '@babel/preset-react'
-      ],
       plugins: [
         '@babel/plugin-syntax-dynamic-import',
         '@babel/plugin-proposal-export-default-from',
@@ -30,7 +26,7 @@ export default [{
         '@babel/plugin-transform-parameters',
         '@babel/plugin-transform-block-scoping',
         '@babel/plugin-transform-computed-properties',
-        '@babel/plugin-transform-template-literals'
+        '@babel/plugin-transform-template-literals',
       ],
       runtimeHelpers: true
     }),

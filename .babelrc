@@ -7,7 +7,6 @@
         "forceAllTransforms": true
       }
     ],
-    "@babel/preset-flow",
     "@babel/preset-react"
   ],
   "plugins": [
@@ -23,6 +22,6 @@
     "@babel/plugin-transform-block-scoping",
     "@babel/plugin-transform-computed-properties",
     "@babel/plugin-transform-template-literals",
-    "@babel/plugin-transform-regenerator"
+    "@babel/plugin-transform-regenerator",
   ]
 }

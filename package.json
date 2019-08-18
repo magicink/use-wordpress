@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Useful React Hooks for WordPress.",
   "keywords": [
-    "wordpress",
+    "hooks",
     "react",
-    "hooks"
+    "wordpress"
   ],
   "homepage": "https://github.com/magicink/use-wordpress#readme",
   "bugs": {
@@ -26,7 +26,21 @@
   "main": "dist/bundle.js",
   "scripts": {
     "build": "rollup --config rollup.config.js",
+    "prepare": "npx sort-package-json && npm run build",
     "test": "jest"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src/",
+      "<rootDir>/tests/"
+    ],
+    "setupFiles": [
+      "<rootDir>/tests/setup.js"
+    ],
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-dom/extend-expect"
+    ],
+    "testEnvironment": "jest-environment-jsdom-global"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
@@ -46,18 +60,19 @@
     "@babel/plugin-transform-spread": "^7.2.2",
     "@babel/plugin-transform-template-literals": "^7.4.4",
     "@babel/preset-env": "^7.5.5",
-    "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.5.5",
     "@babel/runtime": "^7.5.5",
     "@testing-library/jest-dom": "^4.0.0",
     "@testing-library/react": "^9.1.3",
     "@testing-library/react-hooks": "^2.0.1",
+    "acorn": "^6.0.0",
     "babel-eslint": "^10.0.2",
     "core-js": "^3.2.1",
     "eslint-plugin-react-hooks": "^1.7.0",
     "flow-bin": "^0.105.2",
     "husky": "^3.0.4",
+    "isomorphic-fetch": "^2.2.1",
     "jest": "^24.9.0",
     "jest-environment-jsdom": "^24.9.0",
     "jest-environment-jsdom-global": "^1.2.0",
@@ -65,21 +80,14 @@
     "nock": "^10.0.6",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-test-renderer": "^16.9.0",
     "regenerator-runtime": "^0.13.3",
     "rollup": "^1.19.4",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-flow": "^1.1.1",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-terser": "^5.1.1",
-    "standard": "^13.1.0"
-  },
-  "jest": {
-    "roots": [
-      "<rootDir>/src/"
-    ],
-    "testEnvironment": "jest-environment-jsdom-global",
-    "setupFilesAfterEnv": [
-      "@testing-library/jest-dom/extend-expect"
-    ]
+    "standard": "^13.1.0",
+    "url-search-params-polyfill": "^7.0.0"
   }
 }
