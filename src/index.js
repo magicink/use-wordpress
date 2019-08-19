@@ -1,11 +1,19 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export const useWordPress = (baseUri = '/?rest_route=/wp/v2') => {
   const [error, setError] = useState()
+  const [embedded, setEmbedded] = useState()
+  const [featuredMedia, setFeaturedMedia] = useState([])
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState()
   const [total, setTotal] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
+
+  useEffect(() => {
+    if (data && !embedded) {
+      getEmbedded(data)
+    }
+  }, [data])
 
   const fetchData = async (endpoint, callback, options) => {
     setLoading(true)
@@ -56,6 +64,20 @@ export const useWordPress = (baseUri = '/?rest_route=/wp/v2') => {
     })
   }
 
+  const getEmbedded = (entity) => {
+    if (entity && entity['_embedded']) {
+      const { '_embedded': embedded } = entity
+      setEmbedded(embedded)
+      getFeaturedMedia(embedded)
+    }
+  }
+
+  const getFeaturedMedia = (embedded) => {
+    if (embedded && embedded['wp:featuredmedia']) {
+      setFeaturedMedia(embedded['wp:featuredmedia'])
+    }
+  }
+
   const optionsToSearchParams = (options) => {
     const params = new URLSearchParams
     if (options) {
@@ -68,11 +90,15 @@ export const useWordPress = (baseUri = '/?rest_route=/wp/v2') => {
 
   return {
     data,
+    embedded,
     error,
+    featuredMedia,
     fetchData,
     get,
     getById,
     getBySlug,
+    getEmbedded,
+    getFeaturedMedia,
     loading,
     total,
     totalPages

@@ -108,11 +108,19 @@ describe('useWordPress', () => {
   })
   describe('getBySlug()', () => {
     const jooks = init(() => useWordPress(testDomain))
+    const recordWithEmbed = {
+      '_embedded': {
+        'wp:featuredmedia': [{
+          id: 10
+        }]
+      },
+      id: 3
+    }
     nock(testDomain)
       .get('/posts&slug=test')
       .reply(200, { id: 2 })
       .get('/pages&context=embed&offset=10&slug=test-page&_embed')
-      .reply(200, { id: 3 })
+      .reply(200, recordWithEmbed)
     afterEach(() => {
       jest.resetAllMocks()
     })
@@ -121,8 +129,11 @@ describe('useWordPress', () => {
       const { getBySlug } = jooks.run()
       await getBySlug('test')
       expect(jooks.run().data).toEqual({ id: 2 })
+      expect(jooks.run().featuredMedia).toEqual([])
       await getBySlug('test-page', 'pages', { context: 'embed', offset: 10 }, true)
-      expect(jooks.run().data).toEqual({ id: 3 })
+      await jooks.mount()
+      expect(jooks.run().data).toEqual(recordWithEmbed)
+      expect(jooks.run().featuredMedia.length).toEqual(1)
       expect(jooks.run().loading).toEqual(false)
     })
   })

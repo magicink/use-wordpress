@@ -1,6 +1,6 @@
 {
   "name": "use-wordpress",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Useful React Hooks for WordPress.",
   "keywords": [
     "hooks",

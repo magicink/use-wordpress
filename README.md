@@ -45,6 +45,8 @@ export const TestComponent = props => {
 | name | type | description |
 |---|---|---|
 | `data` | `any` | The response from the fetch call. |
+| `embedded` | `Object` | Stores the `_embedded` property of an entity if it exists. |
+| `featuredMedia` | `Array<Object>` | Stores the `wp:featuredmedia` array of `embedded` if it exists. |
 | `error` | `Error` | Any errors returned from the fetch calls. |
 | `loading` | `boolean` | Whether or not a fetch is currently being performed. |
 | `total` | `Number` |  The total number of records in the collection. |
@@ -65,6 +67,8 @@ A wrapper for `window.fetch()`. Populates `total` and `totalPages` with the valu
 
 #### `get (type: string, options: {[key: string]: string}, getEmbedded: boolean)`
 
+Used to fetch a collection of `type`.
+
 | name | type | required | default | description |
 |---|---|---|---|---|
 | `type` | `string` | no | `posts` | The type of record your are fetch (i.e `posts`, `pages`, `categories`). |
@@ -73,18 +77,38 @@ A wrapper for `window.fetch()`. Populates `total` and `totalPages` with the valu
 
 #### `getById (id: number, type: string, options: {[key: string]: string, getEmbedded: boolean)`
 
+Used to fetch a record by its ID.
+
 | name | type | required | default | description |
 |---|---|---|---|---|
 | `id` | `number` | yes | | The ID of the record your are trying to fetch. |
-| `type` | `string` | no | `posts` | The type of record your are fetch (i.e `posts`, `pages`, `categories`). |
+| `type` | `string` | yes | `posts` | The type of record your are fetch (i.e `posts`, `pages`, `categories`). |
 | `options` | `Object` | no | `{}`| An object that is converted into search parameters. |
 | `getEmbedded` | `boolean` | no | `false` | If `true` it will add the `_embed` search parameter to the fetch. |
 
 #### `getBySlug (slug: string, type: string, options: {[key: string]: string, getEmbedded: boolean)`
 
+Used to fetch a record by its slug.
+
 | name | type | required | default | description |
 |---|---|---|---|---|
 | `slug` | `string` | yes | | The slug of the record your are trying to fetch. |
-| `type` | `string` | no | `posts` | The type of record your are fetch (i.e `posts`, `pages`, `categories`). |
+| `type` | `string` | yes | `posts` | The type of record your are fetch (i.e `posts`, `pages`, `categories`). |
 | `options` | `Object` | no | `{}`| An object that is converted into search parameters. |
 | `getEmbedded` | `boolean` | no | `false` | If `true` it will add the `_embed` search parameter to the fetch. |
+
+#### `getEmbedded (entity: {'_embedded': Object})`
+
+Stores the `_embedded` of `entity` if it exists. The value of `_embedded` is assigned to `embedded` (see "Properties").
+
+| name | type | required | default | description |
+|---|---|---|---|---|
+| `entity` | `{'_embedded': Object}` | yes | | The data source. |
+
+#### `getFeaturedMedia (embedded: {'wp:featuredmedia': Array<Object>})`
+
+Stores the `wp:featuredmedia` of `embedded` if it exists. The value of `wp:featuredmedia` is stored in `featuredMedia` (see "Properties").
+
+| name | type | required | default | description |
+|---|---|---|---|---|
+| `embedded` | `{'wp:featuredmedia': Array<Object>}` | yes | | The data source. |
