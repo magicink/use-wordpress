@@ -69,6 +69,7 @@ describe('useWordPress', () => {
       expect(jooks.run().data).toHaveLength(2)
       expect(jooks.run().total).toEqual(2)
       expect(jooks.run().totalPages).toEqual(1)
+      expect(jooks.run().loading).toEqual(false)
     })
   })
   describe('getById()', () => {
@@ -102,6 +103,7 @@ describe('useWordPress', () => {
       expect(jooks.run().data).toEqual({ id: 5 })
       await getById(6, 'posts', { context: 'embed' }, true)
       expect(jooks.run().data).toEqual({ id: 6 })
+      expect(jooks.run().loading).toEqual(false)
     })
   })
   describe('getBySlug()', () => {
@@ -121,6 +123,7 @@ describe('useWordPress', () => {
       expect(jooks.run().data).toEqual({ id: 2 })
       await getBySlug('test-page', 'pages', { context: 'embed', offset: 10 }, true)
       expect(jooks.run().data).toEqual({ id: 3 })
+      expect(jooks.run().loading).toEqual(false)
     })
   })
 })

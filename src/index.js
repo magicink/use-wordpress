@@ -18,7 +18,7 @@ export const useWordPress = (baseUri = '/?rest_route=/wp/v2') => {
       const json = await response.json()
       setTotal(parseInt(response.headers.get('X-WP-Total')))
       setTotalPages(parseInt(response.headers.get('X-WP-TotalPages')))
-      callback(json)
+      callback && callback(json)
     } catch (error) {
       setError(error)
     } finally {
