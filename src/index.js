@@ -15,6 +15,23 @@ export const useWordPress = (baseUri = '/?rest_route=/wp/v2') => {
     }
   }, [data])
 
+  const deleteData = async (endpoint, callback, options) => {
+    setLoading(true)
+    const uri = `${baseUri}${endpoint}`
+    try {
+      const response = await fetch(uri, {
+        ...options,
+        method: 'DELETE'
+      })
+      if (!response.ok) throw new Error()
+      callback && callback()
+    } catch (error) {
+      setError(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const fetchData = async (endpoint, callback, options) => {
     setLoading(true)
     const uri = `${baseUri}${endpoint}`
@@ -88,6 +105,14 @@ export const useWordPress = (baseUri = '/?rest_route=/wp/v2') => {
     await getBySlug(slug, 'pages', options, getEmbedded)
   }
 
+  const getPostById = async (id, options = {}, getEmbedded = true) => {
+    await getById(id, 'posts', options, getEmbedded)
+  }
+
+  const getPostBySlug = async (slug, options = {}, getEmbedded = true) => {
+    await getBySlug(slug, 'posts', options, getEmbedded)
+  }
+
   const optionsToSearchParams = (options) => {
     const params = new URLSearchParams()
     if (options) {
@@ -97,9 +122,9 @@ export const useWordPress = (baseUri = '/?rest_route=/wp/v2') => {
     }
     return params.toString()
   }
-
   return {
     data,
+    deleteData,
     embedded,
     error,
     featuredMedia,
@@ -111,6 +136,8 @@ export const useWordPress = (baseUri = '/?rest_route=/wp/v2') => {
     getFeaturedMedia,
     getPageById,
     getPageBySlug,
+    getPostById,
+    getPostBySlug,
     loading,
     total,
     totalPages

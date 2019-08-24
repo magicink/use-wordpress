@@ -1,7 +1,19 @@
-// flow-typed signature: 86dbac0d1a6a6f5721b18a22db2d275b
-// flow-typed version: dfacb40e54/@testing-library/react_v9.x.x/flow_>=v0.104.x
+// flow-typed signature: 7444933b9e903ea67a34afedd3c2725f
+// flow-typed version: 452cd002ef/@testing-library/react_v9.x.x/flow_>=v0.104.x
 
 declare module '@testing-library/react' {
+  // This type comes from
+  // https://github.com/facebook/flow/blob/v0.104.0/lib/react-dom.js#L64
+  declare type ReactDOMTestUtilsThenable = {
+    then(resolve: () => mixed, reject?: () => mixed): mixed,
+    ...
+  };
+  // This type comes from
+  // https://github.com/facebook/flow/blob/v0.104.0/lib/react-dom.js#L116
+  declare type ReactDOMTestUtilsAct = (
+    callback: () => void | ReactDOMTestUtilsThenable
+  ) => ReactDOMTestUtilsThenable;
+
   declare type TextMatch =
     | string
     | RegExp
@@ -14,7 +26,10 @@ declare module '@testing-library/react' {
     ...
   };
 
-  declare type SelectorMatchOptions = { selector?: string, ... } & TextMatchOptions;
+  declare type SelectorMatchOptions = {
+    selector?: string,
+    ...
+  } & TextMatchOptions;
 
   declare type GetByText = (
     text: TextMatch,
@@ -103,7 +118,7 @@ declare module '@testing-library/react' {
     eventProperties?: TInit
   ) => boolean;
 
-  declare type Queries = {...};
+  declare type Queries = { ... };
 
   declare type RenderResult<Q: Queries = GetsAndQueries> = {|
     container: HTMLDivElement,
@@ -114,7 +129,7 @@ declare module '@testing-library/react' {
     rerender: (ui: React$Element<*>) => void,
   |} & Q;
 
-  declare export type RenderOptions<Q: Queries = {...}> = {|
+  declare export type RenderOptions<Q: Queries = { ... }> = {|
     container?: HTMLElement,
     baseElement?: HTMLElement,
     hydrate?: boolean,
@@ -125,14 +140,15 @@ declare module '@testing-library/react' {
   declare module.exports: {
     render(
       ui: React.ReactElement<any>,
-      options?: $Diff<RenderOptions<>, {| queries: any |}>,
+      options?: $Diff<RenderOptions<>, {| queries: any |}>
     ): RenderResult<>,
 
     render<Q: Queries>(
       ui: React.ReactElement<any>,
-      options?: RenderOptions<Q>,
+      options?: RenderOptions<Q>
     ): RenderResult<Q>,
 
+    act: ReactDOMTestUtilsAct,
     cleanup: () => void,
     wait: (
       callback?: () => void,
