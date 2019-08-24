@@ -56,7 +56,7 @@ export const useWordPress = (baseUri = '/?rest_route=/wp/v2') => {
 
   const getBySlug = async (slug, type = 'posts', options = {}, getEmbedded = false) => {
     const embedParam = '&_embed'
-    const params = optionsToSearchParams({...options, slug})
+    const params = optionsToSearchParams({ ...options, slug })
     const endpoint = `/${type}&${params}${getEmbedded ? embedParam : ''}`
 
     await fetchData(endpoint, data => {
@@ -66,7 +66,7 @@ export const useWordPress = (baseUri = '/?rest_route=/wp/v2') => {
 
   const getEmbedded = (entity) => {
     if (entity && entity['_embedded']) {
-      const { '_embedded': embedded } = entity
+      const { _embedded: embedded } = entity
       setEmbedded(embedded)
       getFeaturedMedia(embedded)
     }
@@ -79,9 +79,10 @@ export const useWordPress = (baseUri = '/?rest_route=/wp/v2') => {
   }
 
   const optionsToSearchParams = (options) => {
-    const params = new URLSearchParams
+    const params = new URLSearchParams()
     if (options) {
-      for (let key in options) {
+      for (const key in options) {
+        // eslint-disable-next-line no-prototype-builtins
         if (options.hasOwnProperty(key) && key !== '_embed') params.append(key, options[key])
       }
     }

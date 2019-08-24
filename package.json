@@ -1,6 +1,6 @@
 {
   "name": "use-wordpress",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Useful React Hooks for WordPress.",
   "keywords": [
     "hooks",
@@ -26,8 +26,15 @@
   "main": "dist/bundle.js",
   "scripts": {
     "build": "rollup --config rollup.config.js",
+    "lint": "standard ./src/**/*.js --fix",
+    "patch": "npm version patch --no-git-tag-version",
     "prepare": "npx sort-package-json && npm run build",
     "test": "jest"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test && npm run lint"
+    }
   },
   "jest": {
     "roots": [
@@ -89,5 +96,23 @@
     "rollup-plugin-terser": "^5.1.1",
     "standard": "^13.1.0",
     "url-search-params-polyfill": "^7.0.0"
+  },
+  "standard": {
+    "globals": [
+      "afterAll",
+      "afterEach",
+      "beforeAll",
+      "beforeEach",
+      "describe",
+      "expect",
+      "fetch",
+      "it",
+      "jest"
+    ],
+    "parser": "babel-eslint",
+    "rules": {
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn"
+    }
   }
 }

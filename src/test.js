@@ -24,7 +24,7 @@ describe('useWordPress', () => {
     })
     it('should handle successful responses', async () => {
       await jooks.mount()
-      let { error, fetchData } = jooks.run()
+      const { error, fetchData } = jooks.run()
       expect(error).toBeUndefined()
       expect(typeof fetchData).toEqual('function')
       await fetchData('/succeed', mock)
@@ -33,7 +33,7 @@ describe('useWordPress', () => {
     })
     it('should handle unsuccessful responses', async () => {
       await jooks.mount()
-      let { fetchData } = jooks.run()
+      const { fetchData } = jooks.run()
       expect(jooks.run().error).toBeUndefined()
       expect(typeof fetchData).toEqual('function')
       await fetchData(`/fail`, mock)
@@ -109,7 +109,7 @@ describe('useWordPress', () => {
   describe('getBySlug()', () => {
     const jooks = init(() => useWordPress(testDomain))
     const recordWithEmbed = {
-      '_embedded': {
+      _embedded: {
         'wp:featuredmedia': [{
           id: 10
         }]
