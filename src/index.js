@@ -82,8 +82,7 @@ export const useWordPress = (baseUri = '/?rest_route=/wp/v2') => {
     const params = new URLSearchParams()
     if (options) {
       for (const key in options) {
-        // eslint-disable-next-line no-prototype-builtins
-        if (options.hasOwnProperty(key) && key !== '_embed') params.append(key, options[key])
+        if (Object.hasOwnProperty.call(options, key) && key !== '_embed') params.append(key, options[key])
       }
     }
     return params.toString()

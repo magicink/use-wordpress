@@ -57,7 +57,7 @@ describe('useWordPress', () => {
         'x-wp-total': 2,
         'x-wp-totalpages': 1
       })
-    it('should handle various configurations', async () => {
+    it('should handle all configurations', async () => {
       await jooks.mount()
       const { get } = jooks.run()
       expect(jooks.run().total).toEqual(0)
@@ -88,7 +88,7 @@ describe('useWordPress', () => {
     afterEach(() => {
       jest.resetAllMocks()
     })
-    it('should handle various configurations', async () => {
+    it('should handle all configurations', async () => {
       await jooks.mount()
       const { error, getById } = jooks.run()
       expect(error).toBeUndefined()
@@ -124,7 +124,7 @@ describe('useWordPress', () => {
     afterEach(() => {
       jest.resetAllMocks()
     })
-    it('should handle various configurations', async () => {
+    it('should handle all configurations', async () => {
       await jooks.mount()
       const { getBySlug } = jooks.run()
       await getBySlug('test')
