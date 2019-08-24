@@ -1,6 +1,6 @@
 import init from 'jooks'
 import nock from 'nock'
-import { useWordPress } from './index'
+import { useWordPress } from '../dist/bundle'
 
 const testDomain = 'http://localhost'
 
@@ -93,6 +93,9 @@ describe('useWordPress', () => {
       const { error, getById } = jooks.run()
       expect(error).toBeUndefined()
       expect(typeof getById).toEqual('function')
+      await getById()
+      expect(jooks.run().data).toBeUndefined()
+      expect(jooks.run().error).toBeUndefined()
       await getById(2)
       expect(jooks.run().data).toEqual({ id: 2 })
       await getById(3, 'pages')
@@ -127,6 +130,9 @@ describe('useWordPress', () => {
     it('should handle all configurations', async () => {
       await jooks.mount()
       const { getBySlug } = jooks.run()
+      await getBySlug()
+      expect(jooks.run().data).toBeUndefined()
+      expect(jooks.run().error).toBeUndefined()
       await getBySlug('test')
       expect(jooks.run().data).toEqual({ id: 2 })
       expect(jooks.run().featuredMedia).toEqual([])
@@ -135,6 +141,44 @@ describe('useWordPress', () => {
       expect(jooks.run().data).toEqual(recordWithEmbed)
       expect(jooks.run().featuredMedia.length).toEqual(1)
       expect(jooks.run().loading).toEqual(false)
+    })
+  })
+  describe('getPageById', () => {
+    const jooks = init(() => useWordPress(testDomain))
+    nock(testDomain)
+      .get('/pages/11&_embed')
+      .reply(200, { id: 11 })
+      .get('/pages/12')
+      .reply(200, { id: 12 })
+    it('should handle all configurations', async () => {
+      await jooks.mount()
+      expect(jooks.run().data).toBeUndefined()
+      expect(jooks.run().error).toBeUndefined()
+      const { getPageById } = jooks.run()
+      await getPageById(11)
+      await jooks.mount()
+      expect(jooks.run().data).toEqual({ id: 11 })
+      await getPageById(12, {}, false)
+      expect(jooks.run().data).toEqual({ id: 12 })
+    })
+  })
+  describe('getPageBySlug', () => {
+    const jooks = init(() => useWordPress(testDomain))
+    nock(testDomain)
+      .get('/pages&slug=test1&_embed')
+      .reply(200, { id: 13 })
+      .get('/pages&slug=test2')
+      .reply(200, { id: 14 })
+    it('should handle all configurations', async () => {
+      await jooks.mount()
+      expect(jooks.run().data).toBeUndefined()
+      expect(jooks.run().error).toBeUndefined()
+      const { getPageBySlug } = jooks.run()
+      await getPageBySlug('test1')
+      await jooks.mount()
+      expect(jooks.run().data).toEqual({ id: 13 })
+      await getPageBySlug('test2', {}, false)
+      expect(jooks.run().data).toEqual({ id: 14 })
     })
   })
 })

@@ -46,6 +46,7 @@ export const useWordPress = (baseUri = '/?rest_route=/wp/v2') => {
   }
 
   const getById = async (id, type = 'posts', options = {}, getEmbedded = false) => {
+    if (!id) return
     const params = optionsToSearchParams(options)
     const endpoint = `/${type}/${id}${params ? `&${params}` : ''}${getEmbedded ? embedParam : ''}`
 
@@ -55,6 +56,7 @@ export const useWordPress = (baseUri = '/?rest_route=/wp/v2') => {
   }
 
   const getBySlug = async (slug, type = 'posts', options = {}, getEmbedded = false) => {
+    if (!slug) return
     const embedParam = '&_embed'
     const params = optionsToSearchParams({ ...options, slug })
     const endpoint = `/${type}&${params}${getEmbedded ? embedParam : ''}`
@@ -78,6 +80,14 @@ export const useWordPress = (baseUri = '/?rest_route=/wp/v2') => {
     }
   }
 
+  const getPageById = async (id, options = {}, getEmbedded = true) => {
+    await getById(id, 'pages', options, getEmbedded)
+  }
+
+  const getPageBySlug = async (slug, options = {}, getEmbedded = true) => {
+    await getBySlug(slug, 'pages', options, getEmbedded)
+  }
+
   const optionsToSearchParams = (options) => {
     const params = new URLSearchParams()
     if (options) {
@@ -99,6 +109,8 @@ export const useWordPress = (baseUri = '/?rest_route=/wp/v2') => {
     getBySlug,
     getEmbedded,
     getFeaturedMedia,
+    getPageById,
+    getPageBySlug,
     loading,
     total,
     totalPages

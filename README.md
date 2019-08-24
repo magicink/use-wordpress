@@ -72,7 +72,7 @@ Used to fetch a collection of `type`.
 | name | type | required | default | description |
 |---|---|---|---|---|
 | `type` | `string` | no | `posts` | The type of record your are fetch (i.e `posts`, `pages`, `categories`). |
-| `options` | `Object` | no | `{}`| An object that is converted into search parameters. |
+| `options` | `SearchParams` | no | `{}`| An object that is converted into search parameters. |
 | `getEmbedded` | `boolean` | no | `false` | If `true` it will add the `_embed` search parameter to the fetch. |
 
 #### `getById (id: number, type: string, options: {[key: string]: string, getEmbedded: boolean)`
@@ -83,7 +83,7 @@ Used to fetch a record by its ID.
 |---|---|---|---|---|
 | `id` | `number` | yes | | The ID of the record your are trying to fetch. |
 | `type` | `string` | yes | `posts` | The type of record your are fetch (i.e `posts`, `pages`, `categories`). |
-| `options` | `Object` | no | `{}`| An object that is converted into search parameters. |
+| `options` | `SearchParams` | no | `{}`| An object that is converted into search parameters. |
 | `getEmbedded` | `boolean` | no | `false` | If `true` it will add the `_embed` search parameter to the fetch. |
 
 #### `getBySlug (slug: string, type: string, options: {[key: string]: string, getEmbedded: boolean)`
@@ -94,7 +94,7 @@ Used to fetch a record by its slug.
 |---|---|---|---|---|
 | `slug` | `string` | yes | | The slug of the record your are trying to fetch. |
 | `type` | `string` | yes | `posts` | The type of record your are fetch (i.e `posts`, `pages`, `categories`). |
-| `options` | `Object` | no | `{}`| An object that is converted into search parameters. |
+| `options` | `SearchParams` | no | `{}`| An object that is converted into search parameters. |
 | `getEmbedded` | `boolean` | no | `false` | If `true` it will add the `_embed` search parameter to the fetch. |
 
 #### `getEmbedded (entity: {'_embedded': Object})`
@@ -112,3 +112,27 @@ Stores the `wp:featuredmedia` of `embedded` if it exists. The value of `wp:featu
 | name | type | required | default | description |
 |---|---|---|---|---|
 | `embedded` | `{'wp:featuredmedia': Array<Object>}` | yes | | The data source. |
+
+#### `getPageById (id: number, options: Object, getEmbedded: boolean)`
+
+A wrapper for `getById` used to get a page by its ID.
+
+| name | type | required | default | description |
+|---|---|---|---|---|
+| `id` | `number` | yes | | The ID of the page. |
+| `options` | `SearchParams` | no | `{}` | An object that is converted into the request search params. |
+| `getEmbedded` | `boolean` | no | `true` | If `true` the request will also fetch embedded objects. |
+
+#### `getPageBySlug (slug: string, options: Object, getEmbedded: boolean)`
+
+A wrapper for `getBySlug` used to get a page by its slug.
+
+| name | type | required | default | description |
+|---|---|---|---|---|
+| `slug` | `string` | yes | | The slug of the page. |
+| `options` | `SearchParams` | no | `{}` | An object that is converted into the request search params. |
+| `getEmbedded` | `boolean` | no | `true` | If `true` the request will also fetch embedded objects. |
+
+## Data Types
+
+#### `SearchParams`: `{[key: string]: string}`
