@@ -4,6 +4,10 @@
 
 Useful React Hooks for WordPress.
 
+### Installation
+
+`npm i -D use-wordpress`
+
 ### Requirements
 
 This library relies upon an implementation of WHATWG `fetch` and `URLSearchParams`.
