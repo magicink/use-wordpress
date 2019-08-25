@@ -36,7 +36,7 @@ export const TestComponent = props => {
 
 | name | type | required | default | description |
 |---|---|---|---|---|
-| `nonce` | `string` | yes | |  A "number used once" to help protect URLs and forms from certain types of misuse. |
+| `nonce` | `string` | yes | |  A "number used once" to help protect URLs and forms from certain types of misuse. [Learn more about nonces](https://developer.wordpress.org/rest-api/using-the-rest-api/authentication/). |
 | `baseUri` | `string` | no | `?/rest_route=/wp/v2` | The base URI of WordPress's REST API. |
 
 ## API
