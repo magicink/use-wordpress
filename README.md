@@ -10,7 +10,7 @@ This library relies upon an implementation of WHATWG `fetch` and `URLSearchParam
 
 ## Initialization
 
-### `useWordPress(baseUri: string)`
+### `useWordPress(nonce: string, baseUri: string)`
 
 #### Usage
 
@@ -18,7 +18,7 @@ This library relies upon an implementation of WHATWG `fetch` and `URLSearchParam
 import React from 'react'
 import { useWordPress } from 'use-wordpress'
 export const TestComponent = props => {
-  const { data, get, total, totalPages } = useWordPress()
+  const { data, get, total, totalPages } = useWordPress(wpApiSettings.nonce)
   const [initialized, setInitialized] = React.useState(false)
   React.useEffect(() => {
     if (!initialized) {
@@ -36,6 +36,7 @@ export const TestComponent = props => {
 
 | name | type | required | default | description |
 |---|---|---|---|---|
+| `nonce` | `string` | yes | |  A "number used once" to help protect URLs and forms from certain types of misuse. |
 | `baseUri` | `string` | no | `?/rest_route=/wp/v2` | The base URI of WordPress's REST API. |
 
 ## API

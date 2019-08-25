@@ -12,7 +12,7 @@ describe('useWordPress', () => {
     expect(typeof useWordPress).toEqual('function')
   })
   describe('fetchData()', () => {
-    const jooks = init(() => useWordPress(testDomain))
+    const jooks = init(() => useWordPress(1234, testDomain))
     const mock = jest.fn()
     nock(testDomain)
       .get('/succeed')
@@ -42,7 +42,7 @@ describe('useWordPress', () => {
     })
   })
   describe('get()', () => {
-    const jooks = init(() => useWordPress(testDomain))
+    const jooks = init(() => useWordPress(1234, testDomain))
     nock(testDomain)
       .get('/posts')
       .reply(200, [{ id: 2 }], {
@@ -73,7 +73,7 @@ describe('useWordPress', () => {
     })
   })
   describe('getById()', () => {
-    const jooks = init(() => useWordPress(testDomain))
+    const jooks = init(() => useWordPress(1234, testDomain))
     nock(testDomain)
       .get('/posts/2')
       .reply(200, { id: 2 })
@@ -110,7 +110,7 @@ describe('useWordPress', () => {
     })
   })
   describe('getBySlug()', () => {
-    const jooks = init(() => useWordPress(testDomain))
+    const jooks = init(() => useWordPress(1234, testDomain))
     const recordWithEmbed = {
       _embedded: {
         'wp:featuredmedia': [{
@@ -144,7 +144,7 @@ describe('useWordPress', () => {
     })
   })
   describe('getPageById', () => {
-    const jooks = init(() => useWordPress(testDomain))
+    const jooks = init(() => useWordPress(1234, testDomain))
     nock(testDomain)
       .get('/pages/11&_embed')
       .reply(200, { id: 11 })
@@ -163,7 +163,7 @@ describe('useWordPress', () => {
     })
   })
   describe('getPageBySlug', () => {
-    const jooks = init(() => useWordPress(testDomain))
+    const jooks = init(() => useWordPress(1234, testDomain))
     nock(testDomain)
       .get('/pages&slug=test1&_embed')
       .reply(200, { id: 13 })

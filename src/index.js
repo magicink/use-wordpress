@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export const useWordPress = (baseUri = '/?rest_route=/wp/v2') => {
+export const useWordPress = (nonce, baseUri = '/?rest_route=/wp/v2') => {
   const [error, setError] = useState()
   const [embedded, setEmbedded] = useState()
   const [featuredMedia, setFeaturedMedia] = useState([])
@@ -15,12 +15,14 @@ export const useWordPress = (baseUri = '/?rest_route=/wp/v2') => {
     }
   }, [data])
 
-  const deleteData = async (endpoint, callback, options) => {
+  const deleteData = async (endpoint, callback) => {
     setLoading(true)
     const uri = `${baseUri}${endpoint}`
     try {
       const response = await fetch(uri, {
-        ...options,
+        headers: {
+          'X-WP-Nonce': nonce
+        },
         method: 'DELETE'
       })
       if (!response.ok) throw new Error()
@@ -32,11 +34,15 @@ export const useWordPress = (baseUri = '/?rest_route=/wp/v2') => {
     }
   }
 
-  const fetchData = async (endpoint, callback, options) => {
+  const fetchData = async (endpoint, callback) => {
     setLoading(true)
     const uri = `${baseUri}${endpoint}`
     try {
-      const response = await fetch(uri, options)
+      const response = await fetch(uri, {
+        headers: {
+          'X-WP-Nonce': nonce
+        }
+      })
       if (!response.ok) {
         throw new Error()
       }
@@ -45,6 +51,7 @@ export const useWordPress = (baseUri = '/?rest_route=/wp/v2') => {
       setTotalPages(parseInt(response.headers.get('X-WP-TotalPages')))
       callback && callback(json)
     } catch (error) {
+      console.log(error)
       setError(error)
     } finally {
       setLoading(false)
