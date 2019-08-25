@@ -55,7 +55,7 @@ export const TestComponent = props => {
 
 ### Methods
 
-#### `fetchData (endpoint: string, callback: Function, options: Object)`
+#### `fetchData (endpoint: string, callback: Function, headers: Object)`
 
 A wrapper for `window.fetch()`. Populates `total` and `totalPages` with the values of `x-wp-total` and
 `x-wp-totalpages`, respectively, if they are present in the response header.
@@ -64,7 +64,7 @@ A wrapper for `window.fetch()`. Populates `total` and `totalPages` with the valu
 |---|---|---|---|---|
 | `endpoint` | `string` | yes | | The portion of the URI that is appended on the base URI passed into the initializer. |
 | `callback` | `Function` | yes | | A callback that invoked upon a successful fetch request. |
-| `options` | `Object` | no | | Options passed to the fetch call. |
+| `headers` | `Object` | no | | Headers passed to the fetch call. |
 
 #### `get (type: string, options: {[key: string]: string}, getEmbedded: boolean)`
 

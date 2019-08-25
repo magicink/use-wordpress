@@ -15,12 +15,13 @@ export const useWordPress = (nonce, baseUri = '/?rest_route=/wp/v2') => {
     }
   }, [data])
 
-  const deleteData = async (endpoint, callback) => {
+  const deleteData = async (endpoint, callback, headers) => {
     setLoading(true)
     const uri = `${baseUri}${endpoint}`
     try {
       const response = await fetch(uri, {
         headers: {
+          ...headers,
           'X-WP-Nonce': nonce
         },
         method: 'DELETE'
@@ -34,12 +35,13 @@ export const useWordPress = (nonce, baseUri = '/?rest_route=/wp/v2') => {
     }
   }
 
-  const fetchData = async (endpoint, callback) => {
+  const fetchData = async (endpoint, callback, headers) => {
     setLoading(true)
     const uri = `${baseUri}${endpoint}`
     try {
       const response = await fetch(uri, {
         headers: {
+          ...headers,
           'X-WP-Nonce': nonce
         }
       })
