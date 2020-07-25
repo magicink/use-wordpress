@@ -26,6 +26,7 @@
   ],
   "scripts": {
     "build": "rollup --config rollup.config.js",
+    "clean": "npx rimraf ./dist",
     "lint": "standard ./src/**/*.js --fix",
     "patch": "npm version patch --no-git-tag-version",
     "prepare": "npx sort-package-json && npm run build",
@@ -33,7 +34,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test && npm run lint"
+      "pre-commit": "npm run build && npm test && npm run lint && npm run clean"
     }
   },
   "jest": {
